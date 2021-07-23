@@ -20,10 +20,26 @@ public class BinarySearchTree<K extends Comparable<K>> {
         int size = binaryTree.getSize();
         System.out.println(binaryTree);
         System.out.println("size of binary tree:"+size);
+        System.out.println("Inorder Traversal of Binary Search tree");
+        binaryTree.inorderTraversal(binaryTree.root);
+
+        System.out.println("\n");
+        binaryTree.searchNode(binaryTree.root, 63);
+
+        if(flag)
+            System.out.println("Element 63 is present in the binary tree");
+        else
+            System.out.println("Element 63 is not present in the binary tree");
     }
-    private BinaryNode<K> root;
-    public void add(K key)
-    {
+
+    BinaryNode<K> root;
+    static boolean flag = false;
+
+    public  BinarySearchTree(){
+        root=null;
+    }
+
+    public void add(K key) {
         this.root = this.insertData(root,key);
     }
 
@@ -53,9 +69,34 @@ public class BinarySearchTree<K extends Comparable<K>> {
     {
         return current == null ? 0 : 1 + this.getSizeBinary(current.left)+this.getSizeBinary(current.right);
     }
-    @Override
-    public String toString()
-    {
-        return "MyBinary [root=" + root + "]";
+
+    public void inorderTraversal(BinaryNode node) {
+        if(root == null)
+            System.out.println("Tree is empty");
+        else {
+            if(node.left != null)
+                inorderTraversal(node.left);
+            System.out.print(node.key + " ");
+            if(node.right != null)
+                inorderTraversal(node.right);
+        }
     }
+
+    public void searchNode(BinaryNode node, int value) {
+        if(root == null)
+            System.out.println("Tree is empty");
+        else {
+            if(node.key.compareTo(root.key) == value) {
+                flag = true;
+                return;
+            }
+            if(flag == false && node.left != null){
+                searchNode(node.left, value);
+            }
+            if(flag == false && node.right != null){
+                searchNode(node.right, value);
+            }
+        }
+    }
+
 }
